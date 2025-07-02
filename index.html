@@ -1,0 +1,1412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebDevPro | Modern Web Development Solutions</title>
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        
+        :root {
+            --primary: #4f46e5;
+            --primary-dark: #4338ca;
+            --dark: #0f172a;
+            --darker: #020617;
+            --light: #f8fafc;
+            --gray: #94a3b8;
+            --gray-dark: #4b5563;
+            --max-width: 1200px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--darker);
+            color: var(--light);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        button {
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-family: inherit;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 100;
+            padding: 20px 0;
+            background-color: var(--dark);
+            transition: all 0.3s ease;
+        }
+        
+        .navbar.scrolled {
+            /* background-color: rgba(2, 6, 23, 0.95); */
+            background-color: var(--dark);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            padding: 15px 0;
+        }
+        
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: white;
+        }
+        
+        .logo span {
+            color: var(--primary);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        
+        .nav-link {
+            color: var(--gray);
+            transition: color 0.3s;
+        }
+        
+        .nav-link:hover {
+            color: white;
+        }
+        
+        .menu-toggle {
+            display: none;
+            color: white;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+        }
+        
+        .mobile-menu {
+            display: none;
+            background-color: var(--darker);
+            padding: 20px;
+            margin-top: 15px;
+            border-radius: 8px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .mobile-menu.active {
+            display: block;
+        }
+        
+        .mobile-links {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            list-style: none;
+        }
+        
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding-top: 80px;
+            background: radial-gradient(circle at 30% 50%, rgba(79, 70, 229, 0.2) 0%, rgba(2, 6, 23, 1) 70%);
+        }
+        
+        .hero-container {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 2rem;
+        }
+        
+        .hero-content {
+            flex: 1;
+        }
+        
+        .hero-headline {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+        
+        .hero-headline span {
+            color: var(--primary);
+        }
+        
+        .hero-text {
+            font-size: 1.25rem;
+            color: var(--gray);
+            margin-bottom: 2rem;
+            max-width: 600px;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .btn-outline {
+            border: 2px solid var(--gray-dark);
+            color: white;
+        }
+        
+        .btn-outline:hover {
+            border-color: white;
+        }
+        
+        .hero-image {
+            position: relative;
+            flex: 1;
+        }
+        
+        .hero-image-bg {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom right, var(--primary), #6366f1);
+            border-radius: 12px;
+            filter: blur(20px);
+            opacity: 0.2;
+            z-index: -1;
+        }
+        
+        .hero-img {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        
+        .image-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            background: linear-gradient(to top, black, transparent);
+            color: white;
+            border-bottom-left-radius: 12px;
+            border-bottom-right-radius: 12px;
+        }
+        
+        /* Sections */
+        .section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .section-title p {
+            font-size: 1.125rem;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .bg-dark {
+            background-color: var(--dark);
+        }
+        
+        .bg-darker {
+            background-color: var(--darker);
+        }
+        
+        /* Features */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature-card {
+            background-color: var(--dark);
+            border: 1px solid var(--gray-dark);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(79, 70, 229, 0.2);
+            border-color: var(--primary);
+        }
+        
+        .feature-icon {
+            width: 56px;
+            height: 56px;
+            background-color: rgba(79, 70, 229, 0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .feature-icon svg {
+            width: 24px;
+            height: 24px;
+            color: var(--primary);
+        }
+        
+        .feature-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .feature-text {
+            color: var(--gray);
+        }
+        
+        /* Technologies */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 2.5rem;
+            justify-items: center;
+        }
+        
+        .tech-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .tech-icon {
+            width: 80px;
+            height: 80px;
+            background-color: var(--dark);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+        
+        .tech-icon img {
+            width: 48px;
+            height: 48px;
+        }
+        
+        .tech-name {
+            font-weight: 500;
+        }
+        
+        /* Testimonials */
+        /*.testimonial-container {
+            position: relative;
+        }
+        
+        .testimonial-carousel {
+            display: flex;
+            overflow-x: hidden;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .testimonial-card {
+            min-width: 100%;
+            scroll-snap-align: start;
+            background-color: var(--darker);
+            padding: 2.5rem;
+            border-radius: 12px;
+            margin-right: 2rem;
+            transition: transform 0.5s ease;
+        }*/
+
+        /* Testimonials */
+.testimonial-container {
+    position: relative;
+    overflow: hidden; /* Ensure overflow is hidden */
+}
+
+.testimonial-carousel {
+    display: flex;
+    transition: transform 0.5s ease;
+}
+
+.testimonial-card {
+    min-width: 100%; /* Ensure each card takes full width */
+    background-color: var(--darker);
+    padding: 2.5rem;
+    border-radius: 12px;
+    margin-right: 0; /* Remove margin-right to avoid overflow */
+    transition: transform 0.5s ease;
+}
+
+        
+        .testimonial-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .testimonial-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 1rem;
+        }
+        
+        .testimonial-info h4 {
+            font-weight: 600;
+        }
+        
+        .testimonial-info p {
+            font-size: 0.875rem;
+            color: var(--gray);
+        }
+        
+        .testimonial-content {
+            font-style: italic;
+            color: var(--light);
+            margin-bottom: 1.5rem;
+        }
+        
+        .testimonial-rating {
+            display: flex;
+            gap: 0.25rem;
+        }
+        
+        .rating-star {
+            color: #f59e0b;
+        }
+        
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            transform: translateY(-50%);
+            display: flex;
+            justify-content: space-between;
+            pointer-events: none;
+        }
+        
+        .carousel-btn {
+            pointer-events: auto;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(79, 70, 229, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            border: none;
+            transition: all 0.3s;
+        }
+        
+        .carousel-btn:hover {
+            background-color: rgba(79, 70, 229, 0.4);
+        }
+        
+        /* Pricing */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 0 auto;
+            max-width: 1000px;
+        }
+        
+        .price-card {
+            background-color: var(--dark);
+            border: 1px solid var(--gray-dark);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .price-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 20px 25px -5px rgba(79, 70, 229, 0.2);
+        }
+        
+        .price-card.featured {
+            border-color: var(--primary);
+            border-width: 2px;
+            position: relative;
+        }
+        
+        .featured-badge {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: var(--primary);
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.25rem 0.75rem;
+            border-bottom-left-radius: 8px;
+            border-top-right-radius: 12px;
+        }
+        
+        .price-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .price-subtitle {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+        }
+        
+        .price-amount {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+        
+        .price-interval {
+            font-size: 1rem;
+            color: var(--gray);
+        }
+        
+        .price-features {
+            margin-bottom: 2rem;
+        }
+        
+        .price-feature {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+        
+        .price-feature svg {
+            width: 20px;
+            height: 20px;
+            margin-right: 0.5rem;
+        }
+        
+        .price-feature.available svg {
+            color: #10b981;
+        }
+        
+        .price-feature.unavailable svg {
+            color: var(--gray-dark);
+        }
+        
+        /* Contact */
+        .contact-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+        }
+        
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+        
+        .contact-icon {
+            width: 48px;
+            height: 48px;
+            background-color: rgba(79, 70, 229, 0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        
+        .contact-icon svg {
+            width: 20px;
+            height: 20px;
+            color: var(--primary);
+        }
+        
+        .contact-text h4 {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        
+        .contact-text p {
+            color: var(--gray);
+        }
+        
+        .contact-form-container {
+            background-color: var(--darker);
+            border: 1px solid var(--gray-dark);
+            border-radius: 12px;
+            padding: 2rem;
+        }
+        
+        .contact-form-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-form {
+            display: grid;
+            gap: 1.5rem;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-group.half {
+            grid-column: span 1;
+        }
+        
+        .form-label {
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+        
+        .form-input {
+            background-color: var(--dark);
+            border: 1px solid var(--gray-dark);
+            border-radius: 8px;
+            padding: 12px 16px;
+            color: white;
+            font-family: inherit;
+            transition: all 0.3s;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
+        }
+        
+        textarea.form-input {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            background-color: var(--primary);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .submit-btn:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: var(--darker);
+            border-top: 1px solid var(--gray-dark);
+            padding: 60px 0 30px;
+        }
+        
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+        
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-logo span {
+            color: var(--primary);
+        }
+        
+        .footer-text {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+            max-width: 300px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background-color: var(--dark);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        
+        .social-link:hover {
+            background-color: var(--primary);
+        }
+        
+        .footer-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-link {
+            color: var(--gray);
+            margin-bottom: 0.75rem;
+            display: block;
+            transition: all 0.3s;
+        }
+        
+        .footer-link:hover {
+            color: white;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid var(--gray-dark);
+            color: var(--gray);
+            font-size: 0.875rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .hero-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .hero-buttons {
+                justify-content: center;
+            }
+            
+            .hero-headline {
+                font-size: 2.75rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .hero-headline {
+                font-size: 2.25rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero-headline {
+                font-size: 2rem;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+            
+            .tech-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 1.5rem;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+         /* Accordion Styles */
+        .accordion {
+            border: 1px solid var(--gray-dark);
+            border-radius: 8px;
+        }
+        .accordion-item {
+            border-bottom: 1px solid var(--gray-dark);
+        }
+        .accordion-header {
+            background-color: var(--dark);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            width: 100%;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+        .accordion-header:hover {
+            background-color: var(--primary-dark);
+        }
+        .accordion-content {
+            padding: 15px;
+            display: none; /* Hidden by default */
+            background-color: var(--darker);
+            color: var(--light);
+        }
+        .accordion-content p {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container navbar-container">
+            <a href="#" class="logo">Web<b><span>Dev</span></b>Pro</a>
+            
+            <ul class="nav-links">
+                 <li><a href="#" class="nav-link">Home</a></li>
+                <li><a href="#features" class="nav-link">Features</a></li>
+                <li><a href="#testimonials" class="nav-link">Testimonials</a></li>
+                <li><a href="#pricing" class="nav-link">Pricing</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+            
+            <button class="menu-toggle" id="menu-toggle">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div class="container">
+            <div class="mobile-menu" id="mobile-menu">
+                <ul class="mobile-links">
+                    <li><a href="#" class="nav-link">Home</a></li>
+                    <li><a href="#features" class="nav-link">Features</a></li>
+                    <li><a href="#testimonials" class="nav-link">Testimonials</a></li>
+                    <li><a href="#pricing" class="nav-link">Pricing</a></li>
+                    <li><a href="#contact" class="nav-link">Contact</a></li>
+                    <li><button class="btn btn-primary">Get Started</button></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    </header>
+
+<main>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-container">
+            <div class="hero-content">
+                <h1 class="hero-headline" id="hero-headline"><span>Build</span> Your Dream Website</h1>
+                <p class="hero-text">We create stunning and functional websites that help your business grow.</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary">Get Started Free</button>
+                    <button class="btn btn-outline">Live Demo</button>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="hero-image-bg"></div>
+                <img src="https://t3.ftcdn.net/jpg/02/14/53/92/360_F_214539232_YnUrtuwUEt84gHuU0qG8l7OwZvH4rnPG.jpg" alt="Web development interface showing code and design" class="hero-img">
+                <div class="image-caption">
+                    <h3>Web Development Demo</h3>
+                    <p>See our work in action</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="section bg-darker">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Services</h2>
+                <p>We offer a range of web development services to meet your needs.</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Custom Web Development</h3>
+                    <p class="feature-text">Tailored web solutions that fit your business needs and goals.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7h18M3 12h18m-7 5h7"></path>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">E-commerce Solutions</h3>
+                    <p class="feature-text">Build your online store with our robust e-commerce platforms.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">SEO Optimization</h3>
+                    <p class="feature-text">Improve your website's visibility and ranking on search engines.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Responsive Design</h3>
+                    <p class="feature-text">Ensure your website looks great on all devices and screen sizes.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Content Management Systems</h3>
+                    <p class="feature-text">Manage your website content easily with our CMS solutions.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Website Maintenance</h3>
+                    <p class="feature-text">Keep your website running smoothly with our maintenance services.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technologies Section -->
+    <section id="technologies" class="section bg-dark">
+        <div class="container">
+            <div class="section-title">
+                <h2>Technologies We Use</h2>
+                <p>We work with cutting-edge technologies to deliver high-performance solutions</p>
+            </div>
+            
+            <div class="tech-grid">
+                <div class="tech-item">
+                    <div class="tech-icon">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React">
+                    </div>
+                    <span class="tech-name">React</span>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-icon">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" alt="Next.js">
+                    </div>
+                    <span class="tech-name">Next.js</span>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-icon">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" alt="Node.js">
+                    </div>
+                    <span class="tech-name">Node.js</span>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-icon">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" alt="Tailwind CSS">
+                    </div>
+                    <span class="tech-name">Tailwind CSS</span>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-icon">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" alt="TypeScript">
+                    </div>
+                    <span class="tech-name">TypeScript</span>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-icon">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" alt="MongoDB">
+                    </div>
+                    <span class="tech-name">MongoDB</span>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-icon">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="PostgreSQL">
+                    </div>
+                    <span class="tech-name">PostgreSQL</span>
+                </div>
+
+                <div class="tech-item">
+                    <div class="tech-icon">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/graphql/graphql-plain.svg" alt="GraphQL">
+                    </div>
+                    <span class="tech-name">GraphQL</span>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-icon">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-plain.svg" alt="Docker">
+                    </div>
+                    <span class="tech-name">Docker</span>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-icon">
+                        <img src="https://registry.npmmirror.com/@lobehub/icons-static-png/latest/files/dark/aws-color.png" alt="AWS">
+                    </div>
+                    <span class="tech-name">AWS</span>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-icon">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg" alt="Firebase">
+                    </div>
+                    <span class="tech-name">Firebase</span>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-icon">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git">
+                    </div>
+                    <span class="tech-name">Git</span>
+                </div>
+
+                <div class="tech-item">
+                    <div class="tech-icon">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqf-Kqyd8dSvhhufDguf9CsTZStGVsoSQ5dg&s" alt="Bootstrap">
+                    </div>
+                    <span class="tech-name">Bootstrap</span>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-icon">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Unofficial_JavaScript_logo_2.svg/1200px-Unofficial_JavaScript_logo_2.svg.png" alt="JavaScript">
+                    </div>
+                    <span class="tech-name">JavaScript</span>
+                </div>
+            </section>
+
+               <!-- Testimonials Section -->
+<section id="testimonials" class="section bg-darker">
+    <div class="container">
+        <div class="section-title">
+            <h2>What Our Clients Say</h2>
+            <p>Hear from our satisfied clients about their experiences with us.</p>
+        </div>
+        
+        <div class="testimonial-container">
+            <div class="testimonial-carousel">
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <img src="https://www.digitalstrike.com/wp-content/uploads/2018/09/testimonial-blog-post.jpg" alt="Client Avatar" class="testimonial-avatar">
+                        <div class="testimonial-info">
+                            <h4>Neha Mathur</h4>
+                            <p>CEO, Neha Industries</p>
+                        </div>
+                    </div>
+                    <p class="testimonial-content">"WebDevPro transformed our online presence. Their team is professional and dedicated!"</p>
+                    <div class="testimonial-rating">
+                        <span class="rating-star">★</span>
+                        <span class="rating-star">★</span>
+                        <span class="rating-star">★</span>
+                        <span class="rating-star">★</span>
+                        <span class="rating-star">★</span>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <img src="https://media.istockphoto.com/id/1135381120/photo/portrait-of-a-young-woman-outdoors-smiling.jpg?s=612x612&w=0&k=20&c=T5dukPD1r-o0BFqeqlIap7xzw07icucetwKaEC2Ms5M=" alt="Client Avatar" class="testimonial-avatar">
+                        <div class="testimonial-info">
+                            <h4>Kanak Singh</h4>
+                            <p>Marketing Director, Kanak Finance</p>
+                        </div>
+                    </div>
+                    <p class="testimonial-content">"The service was exceptional! Our website looks amazing and functions perfectly."</p>
+                    <div class="testimonial-rating">
+                        <span class="rating-star">★</span>
+                        <span class="rating-star">★</span>
+                        <span class="rating-star">★</span>
+                        <span class="rating-star">★</span>
+                        <span class="rating-star">★</span>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <img src="https://www.shutterstock.com/image-photo/portrait-happy-ambitious-indian-top-600nw-2526019719.jpg" alt="Client Avatar" class="testimonial-avatar">
+                        <div class="testimonial-info">
+                            <h4>Raj Roy</h4>
+                            <p>Owner, Small Business</p>
+                        </div>
+                    </div>
+                    <p class="testimonial-content">"I highly recommend WebDevPro! They exceeded our expectations in every way."</p>
+                    <div class="testimonial-rating">
+                        <span class="rating-star">★</span>
+                        <span class="rating-star">★</span>
+                        <span class="rating-star">★</span>
+                        <span class="rating-star">★</span>
+                        <span class="rating-star">★</span>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-nav">
+                <button class="carousel-btn" id="prev-btn">❮</button>
+                <button class="carousel-btn" id="next-btn">❯</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Pricing Section -->
+<section id="pricing" class="section bg-dark">
+    <div class="container">
+        <div class="section-title">
+            <h2>Our Pricing Plans</h2>
+            <p>Choose a plan that fits your needs and budget.</p>
+        </div>
+        
+        <div class="pricing-grid">
+            <div class="price-card">
+                <h3 class="price-title">Basic Plan</h3>
+                <p class="price-subtitle">Perfect for individuals</p>
+                <div class="price-amount">$19</div>
+                <div class="price-interval">per month</div>
+                <div class="price-features">
+                    <div class="price-feature available">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-3-3v6"></path>
+                        </svg>
+                        10 GB Storage
+                    </div>
+                    <div class="price-feature available">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-3-3v6"></path>
+                        </svg>
+                        Basic Support
+                    </div>
+                    <div class="price-feature unavailable">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-3-3v6"></path>
+                        </svg>
+                        1 Website
+                    </div>
+                </div>
+                <button class="btn btn-primary">Choose Plan</button>
+            </div>
+
+            <div class="price-card featured">
+                <div class="featured-badge">Most Popular</div>
+                <h3 class="price-title">Standard Plan</h3>
+                <p class="price-subtitle">Ideal for small businesses</p>
+                <div class="price-amount">$49</div>
+                <div class="price-interval">per month</div>
+                <div class="price-features">
+                    <div class="price-feature available">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-3-3v6"></path>
+                        </svg>
+                        50 GB Storage
+                    </div>
+                    <div class="price-feature available">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-3-3v6"></path>
+                        </svg>
+                        Priority Support
+                    </div>
+                    <div class="price-feature available">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-3-3v6"></path>
+                        </svg>
+                        3 Websites
+                    </div>
+                </div>
+                <button class="btn btn-primary">Choose Plan</button>
+            </div>
+
+            <div class="price-card">
+                <h3 class="price-title">Premium Plan</h3>
+                <p class="price-subtitle">Best for large enterprises</p>
+                <div class="price-amount">$99</div>
+                <div class="price-interval">per month</div>
+                <div class="price-features">
+                    <div class="price-feature available">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-3-3v6"></path>
+                        </svg>
+                        Unlimited Storage
+                    </div>
+                    <div class="price-feature available">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-3-3v6"></path>
+                        </svg>
+                        24/7 Support
+                    </div>
+                    <div class="price-feature available">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-3-3v6"></path>
+                        </svg>
+                        Unlimited Websites
+                    </div>
+                </div>
+                <button class="btn btn-primary">Choose Plan</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section id="faq" class="section bg-darker">
+    <div class="container">
+        <div class="section-title">
+            <h2>Frequently Asked Questions</h2>
+            <p>Here are some common questions we receive from our clients.</p>
+        </div>
+        
+        <div class="accordion">
+            <div class="accordion-item">
+                <button class="accordion-header" aria-expanded="false">
+                    <span>What services do you offer?</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </button>
+                <div class="accordion-content">
+                    <p>We offer a range of web development services including custom web development, e-commerce solutions, SEO optimization, and more.</p>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <button class="accordion-header" aria-expanded="false">
+                    <span>How long does it take to build a website?</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </button>
+                <div class="accordion-content">
+                    <p>The timeline for building a website varies based on the complexity of the project. Typically, it can take anywhere from a few weeks to a few months.</p>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <button class="accordion-header" aria-expanded="false">
+                    <span>Do you provide support after the website is launched?</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </button>
+                <div class="accordion-content">
+                    <p>Yes, we offer ongoing support and maintenance services to ensure your website runs smoothly after launch.</p>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <button class="accordion-header" aria-expanded="false">
+                    <span>Can I update my website content myself?</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </button>
+                <div class="accordion-content">
+                    <p>Absolutely! We provide content management systems (CMS) that allow you to easily update your website content without any technical knowledge.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Contact Section -->
+<section id="contact" class="section bg-dark">
+    <div class="container">
+        <div class="section-title">
+            <h2>Contact Us</h2>
+            <p>We'd love to hear from you! Fill out the form below to get in touch.</p>
+        </div>
+        
+        <div class="contact-form-container">
+            <form class="contact-form">
+                <div class="form-group">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" id="name" class="form-input" placeholder="Your Name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" id="email" class="form-input" placeholder="Your Email" required>
+                </div>
+                <div class="form-group">
+                    <label for="message" class="form-label">Message</label>
+                    <textarea id="message" class="form-input" placeholder="Your Message" required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Send Message</button>
+            </form>
+        </div>
+    </div>
+</section>
+</main>
+
+<!-- Footer Section -->
+<footer class="footer">
+    <div class="container footer-container">
+        <div class="footer-logo">Web<b><span>Dev</span></b>Pro</div>
+        <div class="footer-text">Providing modern web development solutions to help your business thrive.</div>
+        <div class="footer-title">Follow Us</div>
+        <div class="social-links">
+            <a href="mailto:pavankushwaha23072004@gmail.com" target="_blank" class="social-link" aria-label="Email">
+                <i class="fa-solid fa-envelope"></i>
+            </a>
+            <a href="https://github.com/PavanKushwaha23" target="_blank" class="social-link" aria-label="Github">
+                <i class="fa-brands fa-github"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/pavan-kushwaha-1b2144334?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="social-link" aria-label="LinkedIn">
+                <i class="fab fa-linkedin-in"></i>
+            </a>
+            <a href="https://youtube.com/@aviation8455?si=cbGyfXy9ruBbszPh" target="_blank" class="social-link" aria-label="Youtube">
+                <i class="fa-brands fa-youtube"></i>
+            </a>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        &copy; 2025 WebDevPro. All rights reserved.
+        <p>Designed & Developed ❤️ by Pavan Kushwaha</p>
+    </div>
+</footer>
+
+<script>
+
+// Get the menu toggle button and mobile menu
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        // Add event listener to the menu toggle button
+        menuToggle.addEventListener('click', () => {
+            // Toggle the 'active' class on the mobile menu
+            mobileMenu.classList.toggle('active');
+        });
+        // Optional: Close the mobile menu when a link is clicked
+        const mobileLinks = document.querySelectorAll('.mobile-links .nav-link');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+            });
+        });
+
+
+    const carousel = document.querySelector('.testimonial-carousel');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const testimonialCards = document.querySelectorAll('.testimonial-card');
+    let currentIndex = 0;
+
+    function updateCarousel() {
+        const totalCards = testimonialCards.length;
+        const offset = -currentIndex * 100; // Move the carousel based on the current index
+        carousel.style.transform = `translateX(${offset}%)`;
+    }
+
+    nextBtn.addEventListener('click', () => {
+        const totalCards = testimonialCards.length;
+        currentIndex = (currentIndex + 1) % totalCards; // Loop back to the first card
+        updateCarousel();
+    });
+
+    prevBtn.addEventListener('click', () => {
+        const totalCards = testimonialCards.length;
+        currentIndex = (currentIndex - 1 + totalCards) % totalCards; // Loop back to the last card
+        updateCarousel();
+    });
+
+    // Accordion functionality
+const accordionHeaders = document.querySelectorAll('.accordion-header');
+
+accordionHeaders.forEach(header => {
+    header.addEventListener('click', () => {
+        const content = header.nextElementSibling; // Get the associated content
+        const isExpanded = header.getAttribute('aria-expanded') === 'true'; // Check if the header is expanded
+
+        // Toggle the aria-expanded attribute
+        header.setAttribute('aria-expanded', !isExpanded);
+        
+        // Toggle the display of the content
+        if (isExpanded) {
+            content.style.display = 'none'; // Hide the content
+        } else {
+            content.style.display = 'block'; // Show the content
+        }
+    });
+});
+
+</script>
+
+ </body>
+</html>
