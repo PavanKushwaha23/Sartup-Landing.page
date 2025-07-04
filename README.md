@@ -47,7 +47,10 @@ Startups often face challenges in capturing customer attention and presenting th
 
 > 🔗 View live demo: [Startup Landing Page](https://lovely-moonbeam-4270fc.netlify.app/)
 
-Screenshots or GIFs (optional) can be added here to showcase different sections.
+![Screenshot 2025-07-05 003227](https://github.com/user-attachments/assets/820436c5-5f2c-4fb7-9385-77d965252aeb)
+
+![Screenshot 2025-07-05 003241](https://github.com/user-attachments/assets/1a3c257a-87a6-42dd-83bb-8e24a4305a35)
+
 
 ---
 
